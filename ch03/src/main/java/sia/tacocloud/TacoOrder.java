@@ -1,6 +1,8 @@
 package sia.tacocloud;
 
 import java.util.List;
+import java.util.Date;
+import java.io.Serializable;
 import java.util.ArrayList;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Digits;
@@ -10,7 +12,11 @@ import org.hibernate.validator.constraints.CreditCardNumber;
 import lombok.Data;
 
 @Data
-public class TacoOrder {
+public class TacoOrder implements Serializable {
+    private static final long serialVersionUID = 1L;
+    private Long id;
+    private Date placedAt;
+
     @NotBlank(message="Delivery name is required")
     private String deliveryName;
     
@@ -25,7 +31,7 @@ public class TacoOrder {
     
     @NotBlank(message="Delivery zip is required")
     private String deliveryZip;
-    
+
     @CreditCardNumber(message="Not a valid credit card number")
     private String ccNumber;
 

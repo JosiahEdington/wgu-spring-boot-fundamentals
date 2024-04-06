@@ -1,5 +1,5 @@
 # WGU - D287 Java Frameworks
-This repo follows the first three chapters of the *Spring in Action* book by Craig Walls. Utilizing Spring Boot and Thymeleaf, Craig's book walks me through how to create a basic website.
+This repo follows the first three chapters of the *Spring in Action* book by Craig Walls. Utilizing Spring Boot and Thymeleaf, Craig's book walked me through how to create a basic website application.
 
 ## Chapter 1
 Not uploaded to Github, but chapter one creates the initial landing page of our TacoCloud website and describes the Spring's folder organization and how to annotate our files to interract with Spring Boot.
