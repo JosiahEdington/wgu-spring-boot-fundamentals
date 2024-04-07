@@ -33,6 +33,7 @@ public class TacoOrder implements Serializable {
     private String deliveryZip;
 
     @CreditCardNumber(message="Not a valid credit card number")
+    //@Digits(integer=9, fraction=0, message="Need a credit card of 9 digis")
     private String ccNumber;
 
     @Pattern(regexp="^(0[1-9]|1[0-2])([\\/])([2-9][0-9])$",

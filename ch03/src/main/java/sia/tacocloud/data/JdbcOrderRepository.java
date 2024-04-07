@@ -35,8 +35,8 @@ public class JdbcOrderRepository implements OrderRepository {
                 "insert into Taco_Order"
                 + "(delivery_name, delivery_street, delivery_city, "
                 + "delivery_state, delivery_zip, cc_number, "
-                + "cc_expression, cc_cvv, placed_at) "
-                + "values(?,?,?,?,?,?,?,?,?)",
+                + "cc_expiration, cc_cvv, placed_at) "
+                + "values(?, ?, ?, ?, ?, ?, ?, ?, ?)",
                 Types.VARCHAR, Types.VARCHAR, Types.VARCHAR,
                 Types.VARCHAR, Types.VARCHAR, Types.VARCHAR,
                 Types.VARCHAR, Types.VARCHAR, Types.TIMESTAMP
@@ -50,6 +50,7 @@ public class JdbcOrderRepository implements OrderRepository {
                 tacoOrder.getDeliveryStreet(),
                 tacoOrder.getDeliveryCity(),
                 tacoOrder.getDeliveryState(),
+                tacoOrder.getDeliveryZip(),
                 tacoOrder.getCcNumber(),
                 tacoOrder.getCcExpiration(),
                 tacoOrder.getCcCVV(),
@@ -104,7 +105,7 @@ public class JdbcOrderRepository implements OrderRepository {
             jdbcOperations.update(
                 "insert into Ingredient_Ref (ingredient, taco, taco_key)"
                 + "values (?, ?, ?)",
-                ingredient, tacoId, key++);
+                ingredient.getId(), tacoId, key++);
         }
     }
 }
