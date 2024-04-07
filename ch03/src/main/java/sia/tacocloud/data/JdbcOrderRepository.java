@@ -14,7 +14,7 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import sia.tacocloud.IngredientRef;
+import sia.tacocloud.Ingredient;
 import sia.tacocloud.Taco;
 import sia.tacocloud.TacoOrder;
 
@@ -69,13 +69,13 @@ public class JdbcOrderRepository implements OrderRepository {
         return tacoOrder;
     }
     
-    private void saveTaco(Long orderId, int orderKey, Taco taco) {
+    private long saveTaco(Long orderId, int orderKey, Taco taco) {
         taco.setCreatedAt(new Date());
         PreparedStatementCreatorFactory pscf = new PreparedStatementCreatorFactory(
                 "insert into taco"
                 + "(name, created_at, taco_order, taco_order_key)" 
-                + "values (?,?,?,?)",
-                Types.VARCHAR, Types.TIMESTAMP, Types.LONG, Types.LONG);
+                + "values (?, ?, ?, ?)",
+                Types.VARCHAR, Types.TIMESTAMP, Types.BIGINT, Types.BIGINT);
 
         pscf.setReturnGeneratedKeys(true);
         PreparedStatementCreator psc = 
@@ -92,16 +92,19 @@ public class JdbcOrderRepository implements OrderRepository {
         taco.setId(tacoId);
 
         saveIngredientRefs(tacoId, taco.getIngredients());
+        
+        return tacoId;
 
     }
 
-    private void saveIngredientRefs(long tacoId, List<IngredientRef> ingredientRefs) {
+    private void saveIngredientRefs(long tacoId, List<Ingredient> ingredients) {
         int key = 0;
-        for (IngredientRef ingredientRef : ingredientRefs) {
+
+        for (Ingredient ingredient : ingredients) {
             jdbcOperations.update(
                 "insert into Ingredient_Ref (ingredient, taco, taco_key)"
                 + "values (?, ?, ?)",
-                ingredientRef.getIngredient(), tacoId, key++);
+                ingredient, tacoId, key++);
         }
     }
 }
